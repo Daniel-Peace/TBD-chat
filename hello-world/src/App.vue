@@ -1,23 +1,34 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+// import { RouterLink, RouterView } from 'vue-router'
+import { nanoid } from 'nanoid'
+import { ref } from 'vue'
+import ToDoItem from './components/ToDoItem.vue'
+import ToDoForm from './components/ToDoForm.vue'
+
+// must be a "ref" since we will be changing it with addToDo
+const ToDoItems = ref([
+  { id: 'todo-' + nanoid(), label: 'Learn Vue', done: false },
+  { id: 'todo-' + nanoid(), label: 'Create a Vue project with create-vue', done: true },
+  { id: 'todo-' + nanoid(), label: 'Have fun', done: true },
+  { id: 'todo-' + nanoid(), label: 'Create a to-do list', done: false }
+])
+
+function addToDo(toDoLabel: string) {
+  console.log(`Adding todo ${toDoLabel}`)
+  ToDoItems.value.push({ id: `todo-${nanoid()}`, label: toDoLabel, done: false })
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <div id="app">
+    <h1>To-Do List</h1>
+    <to-do-form @todo-added="addToDo"></to-do-form>
+    <ul>
+      <li v-for="item in ToDoItems" :key="item.id">
+        <to-do-item :label="item.label" :done="item.done" :id="item.id"></to-do-item>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <style scoped>

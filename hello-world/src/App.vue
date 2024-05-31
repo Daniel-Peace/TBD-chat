@@ -49,7 +49,7 @@ const listSummaryMessage = computed(() => {
 </script>
 
 <template>
-  <div id="app">
+  <div id="rendered-app">
     <h1>To-Do List</h1>
     <to-do-form @todo-added="addToDo"></to-do-form>
     <h2 id="list-summary" ref="listSummaryElement" tabindex="-1">{{ listSummaryMessage }}</h2>

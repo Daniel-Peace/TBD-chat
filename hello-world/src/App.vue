@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // import { RouterLink, RouterView } from 'vue-router'
 import { nanoid } from 'nanoid'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import ToDoItem from './components/ToDoItem.vue'
 import ToDoForm from './components/ToDoForm.vue'
 
@@ -17,15 +17,33 @@ function addToDo(toDoLabel: string) {
   console.log(`Adding todo ${toDoLabel}`)
   ToDoItems.value.push({ id: `todo-${nanoid()}`, label: toDoLabel, done: false })
 }
+
+function updateDoneStatus(toDoId: string) {
+  const toDoToUpdate = ToDoItems.value.find((item) => item.id === toDoId)
+  if (toDoToUpdate != undefined) {
+    toDoToUpdate.done = !toDoToUpdate.done
+  }
+}
+
+const listSummary = computed(() => {
+  const numberFinishedItems = ToDoItems.value.filter((item) => item.done).length
+  return `${numberFinishedItems} out of ${ToDoItems.value.length} items completed`
+})
 </script>
 
 <template>
   <div id="app">
     <h1>To-Do List</h1>
     <to-do-form @todo-added="addToDo"></to-do-form>
+    <h2 id="list-summary">{{ listSummary }}</h2>
     <ul aria-labelledby="list-summary" class="stack-large">
       <li v-for="item in ToDoItems" :key="item.id">
-        <to-do-item :label="item.label" :done="item.done" :id="item.id"></to-do-item>
+        <to-do-item
+          :label="item.label"
+          :done="item.done"
+          :id="item.id"
+          @checkbox-changed="updateDoneStatus(item.id)"
+        ></to-do-item>
       </li>
     </ul>
   </div>

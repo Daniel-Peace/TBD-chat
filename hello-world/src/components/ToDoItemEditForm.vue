@@ -2,7 +2,13 @@
   <form class="stack-small" @submit.prevent="onSubmit">
     <div>
       <label class="edit-label">Edit Name for &quot;{{ label }}&quot;</label>
-      <input :id="id" type="text" autocomplete="off" v-model.lazy.trim="newLabel" />
+      <input
+        :id="id"
+        ref="labelInput"
+        type="text"
+        autocomplete="off"
+        v-model.lazy.trim="newLabel"
+      />
     </div>
     <div class="btn-group">
       <button type="button" class="btn" @click="onCancel">
@@ -18,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 const props = defineProps<{
   label: string
   id: string
@@ -26,6 +32,8 @@ const props = defineProps<{
 const emit = defineEmits(['item-edited', 'edit-cancelled'])
 // The original code had a data function `return {newLabel: this.label}`, possibly unnecessary with Composition API? Revisit if errors arise.
 const newLabel = ref()
+// refrence to the HTML label for keyboard focus
+const labelInputElement = ref<HTMLInputElement>()
 
 function onSubmit() {
   if (newLabel.value && newLabel.value !== props.label) {
@@ -35,6 +43,13 @@ function onSubmit() {
 function onCancel() {
   emit('edit-cancelled')
 }
+
+// lifecycle methods for adjusting keyboard focus
+onMounted(() => {
+  if (labelInputElement.value) {
+    labelInputElement.value.focus()
+  }
+})
 </script>
 
 <style scoped>

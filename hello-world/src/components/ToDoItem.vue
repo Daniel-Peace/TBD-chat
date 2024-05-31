@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import ToDoItemEditForm from './ToDoItemEditForm.vue'
+import { nextTick } from 'vue'
 defineProps({
   label: { required: true, type: String },
   id: { required: true, type: String },
@@ -8,6 +9,8 @@ defineProps({
 })
 
 const editing = ref(false)
+// refrence to the HTML button for keyboard focus
+const editButtonElement = ref<HTMLButtonElement>()
 const emit = defineEmits(['item-deleted', 'item-edited', 'checkbox-changed'])
 
 function deleteToDo() {
@@ -19,9 +22,18 @@ function toggleToEditForm() {
 function itemEdited(newLabel: string) {
   emit('item-edited', newLabel)
   editing.value = false
+  focusOnEditButton()
 }
 function editCancelled() {
   editing.value = false
+  focusOnEditButton()
+}
+function focusOnEditButton() {
+  nextTick(() => {
+    if (editButtonElement.value) {
+      editButtonElement.value.focus()
+    }
+  })
 }
 </script>
 
@@ -38,7 +50,7 @@ function editCancelled() {
       <label :for="id" class="checkbox-label">{{ label }}</label>
     </div>
     <div class="btn-group">
-      <button type="button" class="btn" @click="toggleToEditForm">
+      <button type="button" class="btn" ref="editButtonElement" @click="toggleToEditForm">
         Edit <span class="visually-hidden">{{ label }}</span>
       </button>
       <button type="button" class="btn btn__danger" @click="deleteToDo">

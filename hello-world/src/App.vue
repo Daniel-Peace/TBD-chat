@@ -7,14 +7,16 @@ import ToDoForm from './components/ToDoForm.vue'
 
 // must be a "ref" since we will be changing it with addToDo
 const ToDoItems = ref([
-  { id: 'todo-' + nanoid(), label: 'Learn Vue', done: false },
-  { id: 'todo-' + nanoid(), label: 'Create a Vue project with create-vue', done: false },
-  { id: 'todo-' + nanoid(), label: 'Have fun', done: false },
-  { id: 'todo-' + nanoid(), label: 'Create a to-do list', done: false }
+  { id: `todo-${nanoid()}`, label: 'Learn Vue', done: false },
+  { id: `todo-${nanoid()}`, label: 'Create a Vue project with create-vue', done: false },
+  { id: `todo-${nanoid()}`, label: 'Have fun', done: false },
+  { id: `todo-${nanoid()}`, label: 'Create a to-do list', done: false }
 ])
 
+// refrence to the HTML h2 for keyboard focus
+const listSummaryElement = ref<HTMLHeadingElement>()
+
 function addToDo(toDoLabel: string) {
-  console.log(`Adding todo ${toDoLabel}`)
   ToDoItems.value.push({ id: `todo-${nanoid()}`, label: toDoLabel, done: false })
 }
 
@@ -28,6 +30,9 @@ function updateDoneStatus(toDoId: string) {
 function deleteToDo(toDoId: string) {
   const itemIndex = ToDoItems.value.findIndex((item) => item.id === toDoId)
   ToDoItems.value.splice(itemIndex, 1)
+  if (listSummaryElement.value) {
+    listSummaryElement.value.focus()
+  }
 }
 
 function editToDo(toDoId: string, newLabel: string) {
@@ -37,7 +42,7 @@ function editToDo(toDoId: string, newLabel: string) {
   }
 }
 
-const listSummary = computed(() => {
+const listSummaryMessage = computed(() => {
   const numberFinishedItems = ToDoItems.value.filter((item) => item.done).length
   return `${numberFinishedItems} out of ${ToDoItems.value.length} items completed`
 })
@@ -47,7 +52,7 @@ const listSummary = computed(() => {
   <div id="app">
     <h1>To-Do List</h1>
     <to-do-form @todo-added="addToDo"></to-do-form>
-    <h2 id="list-summary">{{ listSummary }}</h2>
+    <h2 id="list-summary" ref="listSummaryElement" tabindex="-1">{{ listSummaryMessage }}</h2>
     <ul aria-labelledby="list-summary" class="stack-large">
       <li v-for="item in ToDoItems" :key="item.id">
         <to-do-item

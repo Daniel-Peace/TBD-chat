@@ -8,8 +8,8 @@ import ToDoForm from './components/ToDoForm.vue'
 // must be a "ref" since we will be changing it with addToDo
 const ToDoItems = ref([
   { id: 'todo-' + nanoid(), label: 'Learn Vue', done: false },
-  { id: 'todo-' + nanoid(), label: 'Create a Vue project with create-vue', done: true },
-  { id: 'todo-' + nanoid(), label: 'Have fun', done: true },
+  { id: 'todo-' + nanoid(), label: 'Create a Vue project with create-vue', done: false },
+  { id: 'todo-' + nanoid(), label: 'Have fun', done: false },
   { id: 'todo-' + nanoid(), label: 'Create a to-do list', done: false }
 ])
 
@@ -22,6 +22,18 @@ function updateDoneStatus(toDoId: string) {
   const toDoToUpdate = ToDoItems.value.find((item) => item.id === toDoId)
   if (toDoToUpdate != undefined) {
     toDoToUpdate.done = !toDoToUpdate.done
+  }
+}
+
+function deleteToDo(toDoId: string) {
+  const itemIndex = ToDoItems.value.findIndex((item) => item.id === toDoId)
+  ToDoItems.value.splice(itemIndex, 1)
+}
+
+function editToDo(toDoId: string, newLabel: string) {
+  const toDoToEdit = ToDoItems.value.find((item) => item.id === toDoId)
+  if (toDoToEdit) {
+    toDoToEdit.label = newLabel
   }
 }
 
@@ -43,6 +55,8 @@ const listSummary = computed(() => {
           :done="item.done"
           :id="item.id"
           @checkbox-changed="updateDoneStatus(item.id)"
+          @item-deleted="deleteToDo(item.id)"
+          @item-edited="editToDo(item.id, $event)"
         ></to-do-item>
       </li>
     </ul>

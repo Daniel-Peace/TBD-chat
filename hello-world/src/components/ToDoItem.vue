@@ -1,22 +1,58 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import ToDoItemEditForm from './ToDoItemEditForm.vue'
 defineProps({
   label: { required: true, type: String },
-  done: { default: false, type: Boolean },
-  id: { required: true, type: String }
+  id: { required: true, type: String },
+  done: { required: true, type: Boolean }
 })
+
+const editing = ref(false)
+const emit = defineEmits(['item-deleted', 'item-edited', 'checkbox-changed'])
+
+function deleteToDo() {
+  emit('item-deleted')
+}
+function toggleToEditForm() {
+  editing.value = true
+}
+function itemEdited(newLabel: string) {
+  emit('item-edited', newLabel)
+  editing.value = false
+}
+function editCancelled() {
+  editing.value = false
+}
 </script>
 
 <template>
-  <div class="custom-checkbox">
-    <input
-      type="checkbox"
-      :id="id"
-      :checked="done"
-      class="checkbox"
-      @change="$emit('checkbox-changed')"
-    />
-    <label :for="id" class="checkbox-label">{{ label }}</label>
+  <div class="stack-small" v-if="!editing">
+    <div class="custom-checkbox">
+      <input
+        type="checkbox"
+        :id="id"
+        :checked="done"
+        class="checkbox"
+        @change="$emit('checkbox-changed')"
+      />
+      <label :for="id" class="checkbox-label">{{ label }}</label>
+    </div>
+    <div class="btn-group">
+      <button type="button" class="btn" @click="toggleToEditForm">
+        Edit <span class="visually-hidden">{{ label }}</span>
+      </button>
+      <button type="button" class="btn btn__danger" @click="deleteToDo">
+        Delete <span class="visually-hidden">{{ label }}</span>
+      </button>
+    </div>
   </div>
+  <to-do-item-edit-form
+    v-else
+    :id="id"
+    :label="label"
+    @item-edited="itemEdited"
+    @edit-cancelled="editCancelled"
+  ></to-do-item-edit-form>
 </template>
 
 <style scoped>

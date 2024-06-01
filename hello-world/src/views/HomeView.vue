@@ -1,9 +1,4 @@
-<script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
-</script>
-
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <h2>About</h2>
+  <p>To create a new page, add a component to the /views folder and include it in the router</p>
 </template>

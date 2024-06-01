@@ -2,11 +2,11 @@
 import { ref } from 'vue'
 import ToDoItemEditForm from './ToDoItemEditForm.vue'
 import { nextTick } from 'vue'
-defineProps({
-  label: { required: true, type: String },
-  id: { required: true, type: String },
-  done: { required: true, type: Boolean }
-})
+defineProps<{
+  label: string
+  id: string
+  done: boolean
+}>()
 
 const editing = ref(false)
 // Template ref to the HTML button for keyboard focus

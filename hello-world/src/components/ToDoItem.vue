@@ -9,8 +9,8 @@ defineProps({
 })
 
 const editing = ref(false)
-// refrence to the HTML button for keyboard focus
-const editButtonElement = ref<HTMLButtonElement>()
+// Template ref to the HTML button for keyboard focus
+const editButtonElement = ref<HTMLButtonElement | null>(null)
 const emit = defineEmits(['item-deleted', 'item-edited', 'checkbox-changed'])
 
 function deleteToDo() {
@@ -30,9 +30,7 @@ function editCancelled() {
 }
 function focusOnEditButton() {
   nextTick(() => {
-    if (editButtonElement.value) {
-      editButtonElement.value.focus()
-    }
+    editButtonElement.value?.focus()
   })
 }
 </script>

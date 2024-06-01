@@ -13,8 +13,8 @@ const ToDoItems = ref([
   { id: `todo-${nanoid()}`, label: 'Create a to-do list', done: false }
 ])
 
-// refrence to the HTML h2 for keyboard focus
-const listSummaryElement = ref<HTMLHeadingElement>()
+// template ref to the HTML h2 for keyboard focus
+const listSummaryElement = ref<HTMLHeadingElement | null>(null)
 
 function addToDo(toDoLabel: string) {
   ToDoItems.value.push({ id: `todo-${nanoid()}`, label: toDoLabel, done: false })
@@ -30,9 +30,7 @@ function updateDoneStatus(toDoId: string) {
 function deleteToDo(toDoId: string) {
   const itemIndex = ToDoItems.value.findIndex((item) => item.id === toDoId)
   ToDoItems.value.splice(itemIndex, 1)
-  if (listSummaryElement.value) {
-    listSummaryElement.value.focus()
-  }
+  listSummaryElement.value?.focus()
 }
 
 function editToDo(toDoId: string, newLabel: string) {

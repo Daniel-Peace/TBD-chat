@@ -32,8 +32,8 @@ const props = defineProps<{
 const emit = defineEmits(['item-edited', 'edit-cancelled'])
 // The original code had a data function `return {newLabel: this.label}`, possibly unnecessary with Composition API? Revisit if errors arise.
 const newLabel = ref()
-// refrence to the HTML label for keyboard focus
-const labelInputElement = ref<HTMLInputElement>()
+// template ref (a template reference refers to the HTML label) for keyboard focus
+const labelInputElement = ref<HTMLInputElement | null>(null)
 
 function onSubmit() {
   if (newLabel.value && newLabel.value !== props.label) {
@@ -46,9 +46,7 @@ function onCancel() {
 
 // lifecycle methods for adjusting keyboard focus
 onMounted(() => {
-  if (labelInputElement.value) {
-    labelInputElement.value.focus()
-  }
+  labelInputElement.value?.focus()
 })
 </script>
 

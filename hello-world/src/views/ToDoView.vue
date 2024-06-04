@@ -9,7 +9,7 @@ const ToDoItems = ref([
   { id: `todo-${nanoid()}`, label: 'Learn Vue', done: false },
   { id: `todo-${nanoid()}`, label: 'Create a Vue project with create-vue', done: false },
   { id: `todo-${nanoid()}`, label: 'Have fun', done: false },
-  { id: `todo-${nanoid()}`, label: 'Create a to-do list', done: false }
+  { id: `todo-${nanoid()}`, label: 'Create a to-do list', done: false },
 ])
 
 // template ref to the HTML h2 for keyboard focus

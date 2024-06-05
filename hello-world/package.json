@@ -4,21 +4,26 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite serve ./frontend",
-    "build": "run-p type-check build-only",
+    "dev": "frontend",
+    "frontend": "vite serve ./frontend",
+    "backend": "node ./backend/dist/HelloBackend.js",
+    "build": "npm-run-all type-check frontend-build-only backend-build-only",
     "preview": "vite preview",
-    "build-only": "vite build ./frontend",
+    "frontend-build-only": "vite build ./frontend",
+    "backend-build-only": "tsc --project ./backend/tsconfig.json",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "prettier --write frontend/src/"
+    "format": "prettier --write '{frontend,backend}/src/**/*'"
   },
   "dependencies": {
+    "express": "^4.19.2",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.8.0",
     "@tsconfig/node20": "^20.1.4",
+    "@types/express": "^4.17.21",
     "@types/node": "^20.12.5",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/eslint-config-prettier": "^9.0.0",

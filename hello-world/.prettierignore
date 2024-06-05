@@ -1,0 +1,3 @@
+# Ignore all SVG files and build files:
+**/*.svg
+dist

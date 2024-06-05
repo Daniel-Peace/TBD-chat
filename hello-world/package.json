@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "frontend",
     "frontend": "vite serve ./frontend",
-    "backend": "node ./backend/dist/HelloBackend.js",
+    "backend": "npm-run-all backend-build-only backend-run-only",
+    "backend-run-only": "node ./backend/dist/HelloBackend.js",
     "build": "npm-run-all type-check frontend-build-only backend-build-only",
     "preview": "vite preview",
     "frontend-build-only": "vite build ./frontend",

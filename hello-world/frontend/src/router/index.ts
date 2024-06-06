@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ToDoView from '../views/ToDoView.vue'
+import DatabaseCommunicatorView from '../views/DatabaseCommunicatorView.vue'
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
     path: '/list',
     name: 'list',
     component: ToDoView,
+  },
+  {
+    path: '/database',
+    name: 'database',
+    component: DatabaseCommunicatorView,
   },
 ]
 

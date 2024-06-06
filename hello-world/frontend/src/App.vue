@@ -10,6 +10,9 @@ const route = useRoute()
     <ul>
       <li><RouterLink to="/">Go to Home</RouterLink></li>
       <li><RouterLink to="/list">Go to Skyler's Demo List</RouterLink></li>
+      <li>
+        <RouterLink to="/database">Go to Skyler's Demo Database Communication Form</RouterLink>
+      </li>
     </ul>
   </nav>
   <main>

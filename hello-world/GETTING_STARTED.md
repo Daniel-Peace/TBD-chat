@@ -1,6 +1,9 @@
-# hello-world
+# Getting Started
 
-This template should help get you started developing with Vue 3 in Vite.
+First steps:
+
+1. Install Bun globally (I used Homebrew, `$ brew install oven-sh/bun/bun`)
+2. Use Bun to automatically install all dependencies with `$ bun install` from the `hello-world/` directory
 
 ## Recommended IDE Setup
 
@@ -10,6 +13,8 @@ This template should help get you started developing with Vue 3 in Vite.
 
 TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
 
+(No need to manually install vue-tsc as it's included in the dependencies file)
+
 ## Customize configuration
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
@@ -17,23 +22,41 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 ## Project Setup
 
 ```sh
-npm install
+bun install
 ```
 
 ### Compile and Hot-Reload for Development
 
 ```sh
-npm run frontend
+bun run frontend
+```
+
+```sh
+bun run backend
 ```
 
 ### Type-Check, Compile and Minify for Production
 
 ```sh
-npm run build
+bun run type-check
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+```sh
+bun run frontend-build
+```
+
+### Lint with [ESLint](https://eslint.org/), Format with Prettier
 
 ```sh
-npm run lint
+bun run lint
+```
+
+```sh
+bun run prettier
+```
+
+### Run Vitest testing suite
+
+```sh
+bun run test
 ```

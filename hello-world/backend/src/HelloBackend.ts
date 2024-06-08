@@ -6,6 +6,7 @@ const port = 3500
 const mongodb_ip = '127.0.0.1'
 const mongodb_port = '27017'
 const uri = `mongodb://${mongodb_ip}:${mongodb_port}`
+const database_name = 'hello_database'
 
 const mongodb_client = new MongoClient(uri, {
   serverApi: {
@@ -15,24 +16,22 @@ const mongodb_client = new MongoClient(uri, {
   },
 })
 
-async function run() {
+async function ping_database() {
   try {
     await mongodb_client.connect()
-
-    // Send a ping to confirm a successful connection
-    const db = mongodb_client.db('hello_database')
+    const db = mongodb_client.db(database_name)
     await db.command({ ping: 1 })
     console.log("Pinged your deployment. You've successfully connected to MongoDB!")
   } finally {
     await mongodb_client.close()
   }
 }
-run().catch(console.dir)
+ping_database().catch(console.dir)
 
 async function replace_user(name: String, bio: String): Promise<String> {
   try {
     await mongodb_client.connect()
-    const db = mongodb_client.db('hello_database')
+    const db = mongodb_client.db(database_name)
     const user_bios_collection = db.collection('user_bios')
     const user_record = {
       name: name,
@@ -52,6 +51,8 @@ async function replace_user(name: String, bio: String): Promise<String> {
     const error_message = `Could not replace user: ${error}`
     console.error(error_message)
     return error_message
+  } finally {
+    await mongodb_client.close()
   }
 }
 

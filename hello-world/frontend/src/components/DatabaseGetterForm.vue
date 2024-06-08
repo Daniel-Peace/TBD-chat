@@ -1,18 +1,15 @@
 <script setup lang="ts"></script>
 
 <template>
-  <form action="/api/form-handler" method="post">
+  <p>User this form to retrieve a user's bio:</p>
+  <form action="/api/form-handler/get" method="post">
     <ul>
       <li>
         <label for="name">Name:</label>
         <input type="text" id="name" name="person_name" />
       </li>
-      <li>
-        <label for="biography">Bio:</label>
-        <textarea id="bio" name="person_bio"></textarea>
-      </li>
       <li class="button">
-        <button type="submit">Send your information</button>
+        <button type="submit">Get this user</button>
       </li>
     </ul>
   </form>

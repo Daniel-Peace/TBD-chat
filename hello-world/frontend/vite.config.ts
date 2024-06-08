@@ -1,10 +1,14 @@
 import { fileURLToPath, URL } from 'node:url'
 
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  // environment must be set to DOM for Vitest to interact with document elements
+  test: {
+    environment: 'jsdom',
+  },
   plugins: [vue()],
   resolve: {
     alias: {

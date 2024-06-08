@@ -28,6 +28,45 @@ async function ping_database() {
 }
 ping_database().catch(console.dir)
 
+app.use(
+  express.urlencoded({
+    extended: true,
+  }),
+)
+
+app.get('/', (req, res) => {
+  res.send('Hello Backend!')
+})
+
+app.post('/api/form-handler/set', async (req, res) => {
+  const person_name = req.body.person_name
+  const person_bio = req.body.person_bio
+  let response: String
+  if (person_name && person_bio) {
+    console.log(`Received user form submission: Name:${person_name} Bio:${person_bio}`)
+    response = await replace_user(person_name, person_bio)
+  } else {
+    response = 'User not updated, Name or Bio missing'
+  }
+  res.send(response)
+})
+
+app.post('/api/form-handler/get', async (req, res) => {
+  const person_name = req.body.person_name
+  let response: String
+  if (person_name) {
+    console.log(`To be implemented: Get user`)
+    response = 'To be implemented: Get user'
+  } else {
+    response = 'Name missing from bio get request'
+  }
+  res.send(response)
+})
+
+app.listen(port, () => {
+  console.log(`Example backend app listening on port ${port}`)
+})
+
 async function replace_user(name: String, bio: String): Promise<String> {
   try {
     await mongodb_client.connect()
@@ -55,30 +94,3 @@ async function replace_user(name: String, bio: String): Promise<String> {
     await mongodb_client.close()
   }
 }
-
-app.use(
-  express.urlencoded({
-    extended: true,
-  }),
-)
-
-app.get('/', (req, res) => {
-  res.send('Hello Backend!')
-})
-
-app.post('/api/form-handler', async (req, res) => {
-  const person_name = req.body.person_name
-  const person_bio = req.body.person_bio
-  let response: String
-  if (person_name && person_bio) {
-    console.log(`Received user form submission: Name:${person_name} Bio:${person_bio}`)
-    response = await replace_user(person_name, person_bio)
-  } else {
-    response = 'User not updated, Name or Bio missing'
-  }
-  res.send(response)
-})
-
-app.listen(port, () => {
-  console.log(`Example backend app listening on port ${port}`)
-})

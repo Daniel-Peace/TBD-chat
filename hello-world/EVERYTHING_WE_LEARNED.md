@@ -2,6 +2,11 @@
 
 This document will be a place to put anything we learn in the development process, for future reference.
 
+First steps:
+
+1. Install Bun globally (I used Homebrew, `$ brew install oven-sh/bun/bun`)
+2. Use Bun to automatically install all dependencies with `$ bun install` from the `hello-world/` directory
+
 ## Node files
 
 Package.json, package-lock.json, and node_modules/ are all used for the Node.js configuration. (They are also used by other JavaScript runtimes/package managers, such as Yarn and Bun)

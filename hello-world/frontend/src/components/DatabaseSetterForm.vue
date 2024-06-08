@@ -3,8 +3,8 @@ function submitUser() {}
 </script>
 
 <template>
-  <p>Use this form to send key/value pairs to the database:</p>
   <form @submit.prevent="submitUser" action="/api/form-handler/set" method="post">
+    <p>Use this form to send key/value pairs to the database:</p>
     <ul>
       <li>
         <label for="name">Name:</label>

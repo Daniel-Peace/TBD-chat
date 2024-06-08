@@ -1,8 +1,8 @@
 <script setup lang="ts"></script>
 
 <template>
-  <p>User this form to retrieve a user's bio:</p>
   <form action="/api/form-handler/get" method="post">
+    <p>User this form to retrieve a user's bio:</p>
     <ul>
       <li>
         <label for="name">Name:</label>

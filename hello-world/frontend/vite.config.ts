@@ -7,7 +7,7 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   // environment must be set to DOM for Vitest to interact with document elements
   test: {
-    environment: 'jsdom',
+    environment: 'happy-dom',
   },
   plugins: [vue()],
   resolve: {

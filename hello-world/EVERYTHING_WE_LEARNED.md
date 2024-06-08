@@ -24,6 +24,9 @@ I'm using Bun because:
 2. Bun is nice for [auto-reloading files](https://bun.sh/docs/runtime/hot) when the dev server is running
 3. Bun can directly execute TypeScript files without compiling to JavaScript first
 
+Note: Node may still be necessary for running Vitest, I don't think Bun and Vue-Test-Utils have [full compatibility](https://github.com/oven-sh/bun/issues/4145) yet.
+There may be a way to use Bun's built-in testing library instead (Bun Test).
+
 ## Other root-folder settings files
 
 `.eslintrc.cjs` is used for the linter, `.prettierrc.json` and `.prettierignore` are used for the formatter, and `tsconfig.json` and `tsconfig.node.json` are used for TypeScript.
@@ -43,3 +46,8 @@ To create a new page,
 - add a component file to the `/views` folder
 - include that component in the router with a URL path
 - Add a link to the URL in the App.vue component (or wherever you want to have a hypertext link).
+
+## Vitest and Vue Test Utils
+
+`describe()` is a way to organize many tests with a single name.  
+Each of those tests can be declared with `it()` or `test()` (identical functions, `it` is an alias of `test`)

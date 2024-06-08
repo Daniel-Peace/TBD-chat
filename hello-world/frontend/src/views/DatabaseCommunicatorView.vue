@@ -10,23 +10,23 @@ const serverResponse = ref('No response yet, try using a form.')
 <template>
   <h2>Database Communicator</h2>
   <fieldset>
-    <div>
-      <input type="radio" v-model="currentFragment" id="setterOption" :value="'set'" />
+    <div id="setterOption">
+      <input type="radio" v-model="currentFragment" :value="'set'" />
       <label for="setterOption">Update Bio</label>
     </div>
-    <div>
-      <input type="radio" v-model="currentFragment" id="getterOption" :value="'get'" />
+    <div id="getterOption">
+      <input type="radio" v-model="currentFragment" id="getterRadio" :value="'get'" />
       <label for="getterOption">View Bio</label>
     </div>
-    <div>
-      <input type="radio" v-model="currentFragment" id="responseOption" :value="'response'" />
+    <div id="responseOption">
+      <input type="radio" v-model="currentFragment" :value="'response'" />
       <label for="responseOption">See Server Response</label>
     </div>
   </fieldset>
-  <div id="fragment">
-    <DatabaseSetterForm v-if="currentFragment === 'set'"></DatabaseSetterForm>
-    <DatabaseGetterForm v-else-if="currentFragment === 'get'"></DatabaseGetterForm>
-    <div v-else>Response from server: {{ serverResponse }}</div>
+  <div id="fragment_holder">
+    <DatabaseSetterForm v-if="currentFragment === 'set'" id="setter"></DatabaseSetterForm>
+    <DatabaseGetterForm v-else-if="currentFragment === 'get'" id="getter"></DatabaseGetterForm>
+    <div v-else id="responder">Response from server: {{ serverResponse }}</div>
   </div>
 </template>
 

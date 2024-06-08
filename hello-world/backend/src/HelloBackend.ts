@@ -29,7 +29,7 @@ async function run() {
 }
 run().catch(console.dir)
 
-async function replace_user(name: string, bio: string): Promise<string> {
+async function replace_user(name: String, bio: String): Promise<String> {
   try {
     await mongodb_client.connect()
     const db = mongodb_client.db('hello_database')
@@ -68,10 +68,10 @@ app.get('/', (req, res) => {
 app.post('/api/form-handler', async (req, res) => {
   const person_name = req.body.person_name
   const person_bio = req.body.person_bio
-  let response
+  let response: String
   if (person_name && person_bio) {
     console.log(`Received user form submission: Name:${person_name} Bio:${person_bio}`)
-    response = await replace_user(person_name, person_bio).catch(console.dir)
+    response = await replace_user(person_name, person_bio)
   } else {
     response = 'User not updated, Name or Bio missing'
   }

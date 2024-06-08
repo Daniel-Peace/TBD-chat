@@ -68,8 +68,13 @@ app.get('/', (req, res) => {
 app.post('/api/form-handler', async (req, res) => {
   const person_name = req.body.person_name
   const person_bio = req.body.person_bio
-  console.log(`Received user form submission: Name:${person_name} Bio:${person_bio}`)
-  const response = await replace_user(person_name, person_bio).catch(console.dir)
+  let response
+  if (person_name && person_bio) {
+    console.log(`Received user form submission: Name:${person_name} Bio:${person_bio}`)
+    response = await replace_user(person_name, person_bio).catch(console.dir)
+  } else {
+    response = 'User not updated, Name or Bio missing'
+  }
   res.send(response)
 })
 

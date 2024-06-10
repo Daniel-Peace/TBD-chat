@@ -1,21 +1,53 @@
 <script setup lang="ts">
-function submitUser() {}
+import { ref } from 'vue'
+
+const emit = defineEmits(['form_submitted', 'form_error'])
+
+const loading = ref(false)
+const name = ref('')
+const bio = ref('')
+
+async function submitUserForm() {
+  loading.value = true
+  try {
+    const post_response = await fetch('http://localhost:5173/api/form-handler/set', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ person_name: name.value, person_bio: bio.value }),
+    })
+
+    const result = await post_response.json()
+    console.log('Success:', result)
+    emit('form_submitted', result)
+    name.value = ''
+    bio.value = ''
+  } catch (error) {
+    console.log('Error:', error)
+    emit('form_error', error)
+  } finally {
+    loading.value = false
+  }
+}
 </script>
 
 <template>
-  <form @submit.prevent="submitUser" action="/api/form-handler/set" method="post">
+  <form>
     <p>Use this form to send key/value pairs to the database:</p>
     <ul>
       <li>
         <label for="name">Name:</label>
-        <input type="text" id="name" name="person_name" />
+        <input type="text" id="name" name="person_name" v-model="name" />
       </li>
       <li>
         <label for="biography">Bio:</label>
-        <textarea id="bio" name="person_bio"></textarea>
+        <textarea id="bio" name="person_bio" v-model="bio"></textarea>
       </li>
       <li class="button">
-        <button type="submit">Send your information</button>
+        <button type="button" :disabled="loading" @click="submitUserForm">
+          Send your information
+        </button>
       </li>
     </ul>
   </form>

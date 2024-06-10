@@ -1,15 +1,41 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const emit = defineEmits(['response_received', 'form_error'])
+
+const name = ref('')
+
+async function requestUserBio() {
+  try {
+    const post_response = await fetch('http://localhost:5173/api/form-handler/get', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ person_name: name.value }),
+    })
+
+    const result = await post_response.json()
+    console.log('Received:', result)
+    emit('response_received', result)
+    name.value = ''
+  } catch (error) {
+    console.log('Error:', error)
+    emit('form_error', error)
+  }
+}
+</script>
 
 <template>
-  <form action="/api/form-handler/get" method="post">
+  <form>
     <p>User this form to retrieve a user's bio:</p>
     <ul>
       <li>
         <label for="name">Name:</label>
-        <input type="text" id="name" name="person_name" />
+        <input type="text" id="name" name="person_name" v-model="name" />
       </li>
       <li class="button">
-        <button type="submit">Get this user</button>
+        <button type="button" @click="requestUserBio">Get this user</button>
       </li>
     </ul>
   </form>

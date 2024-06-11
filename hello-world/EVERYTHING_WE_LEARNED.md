@@ -51,3 +51,4 @@ To create a new page,
 
 `describe()` is a way to organize many tests with a single name.  
 Each of those tests can be declared with `it()` or `test()` (identical functions, `it` is an alias of `test`)
+Vue Test Utils was having a lot of bugs and issues, so I didn't do too much with it.

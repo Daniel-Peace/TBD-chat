@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "frontend": "bunx --bun vite serve ./frontend",
-    "backend": "bun --hot run ./backend/src/HelloBackend.ts",
+    "backend": "bun --hot run ./backend/src/main.ts",
     "preview": "bunx --bun vite preview",
     "frontend-build": "bunx --bun vite build ./frontend",
     "type-check": "vue-tsc --build --force",

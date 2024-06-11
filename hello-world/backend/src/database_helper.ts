@@ -1,12 +1,14 @@
-import express from 'express'
 import { MongoClient, ServerApiVersion } from 'mongodb'
-const app = express()
-const port = 3500
 
 const mongodb_ip = '127.0.0.1'
 const mongodb_port = '27017'
 const uri = `mongodb://${mongodb_ip}:${mongodb_port}`
 const database_name = 'hello_database'
+
+export interface UserRecord {
+  name: string
+  bio: string
+}
 
 const mongodb_client = new MongoClient(uri, {
   serverApi: {
@@ -16,68 +18,20 @@ const mongodb_client = new MongoClient(uri, {
   },
 })
 
-interface UserRecord {
-  name: string
-  bio: string
-}
-
-async function ping_database() {
+export async function ping_database() {
   try {
     await mongodb_client.connect()
     const db = mongodb_client.db(database_name)
     await db.command({ ping: 1 })
     console.log("Pinged your deployment. You've successfully connected to MongoDB!")
+  } catch (error) {
+    console.log(error)
   } finally {
     await mongodb_client.close()
   }
 }
-ping_database().catch(console.dir)
 
-app.use(express.json())
-
-app.get('/', (req, res) => {
-  console.log(`Received request ${req.body}`)
-  res.send(JSON.stringify('Hello Backend!'))
-})
-
-app.post('/api/form-handler/set', async (req, res) => {
-  console.log(`Received request ${req.body}`)
-  const person_name = req.body.person_name
-  const person_bio = req.body.person_bio
-  let response: string
-  if (
-    person_name &&
-    person_bio &&
-    typeof person_name === 'string' &&
-    typeof person_bio === 'string'
-  ) {
-    console.log(`Received user form submission: Name:${person_name} Bio:${person_bio}`)
-    response = await replace_user(person_name, person_bio)
-  } else {
-    response = 'User not updated, Name or Bio missing'
-  }
-  console.log(`Response to client: ${response}`)
-  res.send(JSON.stringify(response))
-})
-
-app.post('/api/form-handler/get', async (req, res) => {
-  console.log(`Received request ${req.body}`)
-  const person_name = req.body.person_name
-  let response: UserRecord | string
-  if (person_name) {
-    console.log(`Getting user ${person_name}`)
-    response = await get_user(person_name)
-  } else {
-    response = 'Name missing from bio get request'
-  }
-  res.send(JSON.stringify(response))
-})
-
-app.listen(port, () => {
-  console.log(`Example backend app listening on port ${port}`)
-})
-
-async function replace_user(name: string, bio: string): Promise<string> {
+export async function replace_user(name: string, bio: string): Promise<string> {
   try {
     await mongodb_client.connect()
     const db = mongodb_client.db(database_name)
@@ -105,7 +59,7 @@ async function replace_user(name: string, bio: string): Promise<string> {
   }
 }
 
-async function get_user(name: string): Promise<UserRecord> {
+export async function get_user(name: string): Promise<UserRecord> {
   try {
     await mongodb_client.connect()
     const db = mongodb_client.db(database_name)

@@ -2,12 +2,11 @@
   "include": ["src/**/*"],
 
   "compilerOptions": {
-    "outDir": "./dist",
     "rootDir": "./src",
     "module": "NodeNext",
-    "target": "ESNext",
     "moduleResolution": "nodenext",
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "noEmit": true, // Since Bun can directly interpret TypeScript, there's no reason to compile to JavaScript...
+    "allowImportingTsExtensions": true // ...and this allows us to directly import from TypeScript files.
   }
 }

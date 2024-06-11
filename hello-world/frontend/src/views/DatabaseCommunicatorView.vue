@@ -10,7 +10,7 @@ function updateResponse(newResponse: string) {
   serverResponse.value = newResponse
 }
 
-interface UserRecord {
+type UserRecord = {
   name: string
   bio: string
 }

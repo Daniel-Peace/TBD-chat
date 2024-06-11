@@ -5,7 +5,7 @@ const mongodb_port = '27017'
 const uri = `mongodb://${mongodb_ip}:${mongodb_port}`
 const database_name = 'hello_database'
 
-export interface UserRecord {
+export type UserRecord = {
   name: string
   bio: string
 }

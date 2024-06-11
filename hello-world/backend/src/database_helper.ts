@@ -32,6 +32,9 @@ export async function ping_database() {
 }
 
 export async function replace_user(name: string, bio: string): Promise<string> {
+  if (!name || !bio) {
+    return 'Name or bio missing'
+  }
   try {
     await mongodb_client.connect()
     const db = mongodb_client.db(database_name)

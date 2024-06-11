@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import DatabaseSetterForm from '../components/DatabaseSetterForm.vue'
 import DatabaseGetterForm from '../components/DatabaseGetterForm.vue'
-import { ref } from 'vue'
+import { ref, type Ref } from 'vue'
 
-const currentFragment = ref('set')
+const currentFragment: Ref<'set' | 'get'> = ref('set')
 const serverResponse = ref('')
 
 function updateResponse(newResponse: string) {

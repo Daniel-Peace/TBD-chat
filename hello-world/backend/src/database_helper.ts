@@ -10,7 +10,7 @@ export type UserRecord = {
   bio: string
 }
 
-const mongodb_client = new MongoClient(uri, {
+const new_mongodb_client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
@@ -18,7 +18,7 @@ const mongodb_client = new MongoClient(uri, {
   },
 })
 
-export async function ping_database() {
+export async function ping_database(mongodb_client = new_mongodb_client) {
   try {
     await mongodb_client.connect()
     const db = mongodb_client.db(database_name)
@@ -31,7 +31,11 @@ export async function ping_database() {
   }
 }
 
-export async function replace_user(name: string, bio: string): Promise<string> {
+export async function replace_user(
+  name: string,
+  bio: string,
+  mongodb_client = new_mongodb_client,
+): Promise<string> {
   if (!name || !bio) {
     return 'Name or bio missing'
   }
@@ -62,7 +66,10 @@ export async function replace_user(name: string, bio: string): Promise<string> {
   }
 }
 
-export async function get_user(name: string): Promise<UserRecord> {
+export async function get_user(
+  name: string,
+  mongodb_client = new_mongodb_client,
+): Promise<UserRecord> {
   try {
     await mongodb_client.connect()
     const db = mongodb_client.db(database_name)

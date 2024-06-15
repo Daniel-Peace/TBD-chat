@@ -11,7 +11,8 @@
     "type-check": "vue-tsc --build --force",
     "lint": "bunx --bun eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write '{frontend,backend}/src/**/*'",
-    "test": "npx vitest -c ./frontend/vite.config.ts"
+    "test-frontend": "npx vitest -c ./frontend/vite.config.ts",
+    "test-backend": "bun test ./backend/__tests__/*"
   },
   "dependencies": {
     "express": "^4.19.2",

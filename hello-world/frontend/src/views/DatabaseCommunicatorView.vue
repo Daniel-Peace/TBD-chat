@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import DatabaseSetterForm from '../components/DatabaseSetterForm.vue'
-import DatabaseGetterForm from '../components/DatabaseGetterForm.vue'
+import DatabaseSetterForm from '@/components/DatabaseSetterForm.vue'
+import DatabaseGetterForm from '@/components/DatabaseGetterForm.vue'
 import { ref, type Ref } from 'vue'
 
 const currentFragment: Ref<'set' | 'get'> = ref('set')

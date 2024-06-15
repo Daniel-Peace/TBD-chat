@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { nanoid } from 'nanoid'
 import { ref, computed } from 'vue'
-import ToDoItem from '../components/ToDoItem.vue'
-import ToDoForm from '../components/ToDoForm.vue'
+import ToDoItem from '@/components/ToDoItem.vue'
+import ToDoForm from '@/components/ToDoForm.vue'
 
 // must be a "ref" since we will be changing it with addToDo
 const ToDoItems = ref([

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import ToDoView from '../views/ToDoView.vue'
-import DatabaseCommunicatorView from '../views/DatabaseCommunicatorView.vue'
+import HomeView from '@/views/HomeView.vue'
+import ToDoView from '@/views/ToDoView.vue'
+import DatabaseCommunicatorView from '@/views/DatabaseCommunicatorView.vue'
 
 const routes = [
   {

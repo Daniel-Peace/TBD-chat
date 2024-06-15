@@ -8,6 +8,7 @@ export default defineConfig({
   // environment must be set to DOM for Vitest to interact with document elements
   test: {
     environment: 'happy-dom',
+    include: ['frontend/__tests__/**/*'],
   },
   plugins: [vue()],
   resolve: {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import ToDoItemEditForm from './ToDoItemEditForm.vue'
+import ToDoItemEditForm from '@/components/ToDoItemEditForm.vue'
 import { nextTick } from 'vue'
 defineProps<{
   label: string

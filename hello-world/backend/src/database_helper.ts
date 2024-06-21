@@ -1,10 +1,9 @@
 import { MongoClient, ServerApiVersion } from 'mongodb'
-import util from 'util'
 
 const mongodb_ip = '127.0.0.1'
 const mongodb_port = '27017'
 const uri = `mongodb://${mongodb_ip}:${mongodb_port}`
-const database_name = 'hello_database_test'
+const database_name = 'hello_database'
 
 export type UserRecord = {
   name: string
@@ -18,18 +17,6 @@ const new_mongodb_client = new MongoClient(uri, {
     deprecationErrors: true,
   },
 })
-
-export async function resetTestDatabase(mongodb_client = new_mongodb_client) {
-  try {
-    await mongodb_client.connect()
-    const db = mongodb_client.db(database_name)
-    await db.collection('user_bios').deleteMany({})
-  } catch (error) {
-    console.error('Error resetting test database:', error)
-  } finally {
-    await mongodb_client.close()
-  }
-}
 
 export async function ping_database(mongodb_client = new_mongodb_client) {
   try {
@@ -91,7 +78,7 @@ export async function get_user(
     const user_document = await user_bios_collection.findOne(query, {
       projection: { _id: 0, name: 1, bio: 1 },
     })
-    console.log(`Retrieved document ${util.inspect(user_document)}`)
+    console.log(`Retrieved document ${user_document}`)
     return user_document
   } finally {
     await mongodb_client.close()

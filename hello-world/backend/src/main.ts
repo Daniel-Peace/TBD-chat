@@ -1,4 +1,5 @@
 import express from 'express'
+import util from 'util'
 import { ping_database, UserRecord, replace_user, get_user } from './database_helper.ts'
 
 const app = express()
@@ -9,12 +10,14 @@ ping_database()
 app.use(express.json())
 
 app.get('/', (req, res) => {
-  console.log(`Received request ${req.body}`)
-  res.send(JSON.stringify('Hello Backend!'))
+  console.log(`Received request ${util.inspect(req.body)}`)
+  const response = JSON.stringify('Hello Backend!')
+  console.log(`Response to client: ${response}`)
+  res.send(response)
 })
 
-app.post('/api/form-handler/set', async (req, res) => {
-  console.log(`Received request ${req.body}`)
+app.post('/api/form-handler', async (req, res) => {
+  console.log(`Received request ${util.inspect(req.body)}`)
   const person_name = req.body.person_name
   const person_bio = req.body.person_bio
   let response: string
@@ -33,9 +36,9 @@ app.post('/api/form-handler/set', async (req, res) => {
   res.send(JSON.stringify(response))
 })
 
-app.post('/api/form-handler/get', async (req, res) => {
-  console.log(`Received request ${req.body}`)
-  const person_name = req.body.person_name
+app.get('/api/form-handler', async (req, res) => {
+  console.log(`Received request ${util.inspect(req.query)}`)
+  const person_name = req.query.person_name
   let response: UserRecord | string
   if (person_name) {
     console.log(`Getting user ${person_name}`)
@@ -43,7 +46,9 @@ app.post('/api/form-handler/get', async (req, res) => {
   } else {
     response = 'Name missing from bio get request'
   }
-  res.send(JSON.stringify(response))
+  response = JSON.stringify(response)
+  console.log(`Response to client: ${response}`)
+  res.send(response)
 })
 
 app.listen(port, () => {
